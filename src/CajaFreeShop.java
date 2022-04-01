@@ -1,0 +1,8 @@
+
+class CajaFreeShop {
+ 
+    public CajaFreeShop(){
+    }
+    
+    
+}
