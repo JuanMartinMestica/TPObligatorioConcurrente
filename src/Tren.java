@@ -1,5 +1,6 @@
 
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -59,16 +60,16 @@ class Tren {
                 }
             }
 
-            //Si puede entrar, resto un espacio
-            this.espaciosRestantes--;
-
-            //Se cuenta un pasajero que se baja en la terminal que llega como parámetro
-            this.contarPasajero(terminal);
             System.out.println(ANSI_GREEN + "[PASAJERO]: " + Thread.currentThread().getName() + " se subió al tren" + ANSI_RESET);
             System.out.println(ANSI_BLUE + "[TREN]: ESPACIOS RESTANTES: " + this.espaciosRestantes + ANSI_RESET);
 
+            //Si puede entrar, resto un espacio
+            this.espaciosRestantes--;
+            //Se cuenta un pasajero que se baja en la terminal que llega como parámetro
+            this.contarPasajero(terminal);
+
             //Aviso al control de tren que puede iniciar el viaje
-            if (espaciosRestantes == 0) {
+            if (this.espaciosRestantes == 0) {
                 viajeEnCurso = true;
                 this.esperaInicio.signalAll();
             }
@@ -124,12 +125,7 @@ class Tren {
         try {
             lockTren.lock();
 
-            //Si quedan lugares espera para arrancar
-            while (this.espaciosRestantes > 0) {
-
-                this.esperaInicio.await();
-
-            }
+            this.esperaInicio.await(12000, TimeUnit.MILLISECONDS);
 
             //Si se llenó arranca el tren
             System.out.println(ANSI_BLUE + "==================== TREN INICIA VIAJE ====================" + ANSI_RESET);

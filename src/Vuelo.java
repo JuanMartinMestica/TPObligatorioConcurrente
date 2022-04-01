@@ -24,6 +24,11 @@ class Vuelo {
         this.pasajesVendidos++;
     }
 
+    public int getHora(){
+        return this.hora;
+    }
+    
+    
     @Override
     public String toString() {
         return "[VUELO] ---> [Aerolinea]: " + this.aerolinea.getNombre() + " [Hora Salida]: " + this.hora + " [Puesto de Embarque]: " + this.puestoEmbarque;

@@ -1,18 +1,20 @@
 
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Pasajero implements Runnable {
-    
+
     /*===================== Variables para print ================*/
     private static final String ANSI_GREEN = "\u001B[32m";
     private static final String ANSI_RESET = "\u001B[0m";
     /*===========================================================*/
-    
+
     private Aeropuerto aeropuerto;
     private char terminalSalida;
     private Vuelo vuelo;
-
+    private double probCompra = 0.4;
+    private Random r = new Random();
 
     public Pasajero(Aeropuerto ap) {
         this.aeropuerto = ap;
@@ -40,12 +42,20 @@ public class Pasajero implements Runnable {
         correspondiente a la que debe ir el pasajero*/
         this.terminalSalida = this.aeropuerto.obtenerTerminal(this.vuelo.getPuerta());
 
-        
         //Viaje en tren del pasajero
         System.out.println(ANSI_GREEN + " [PASAJERO]: " + Thread.currentThread().getName() + " se tomará el tren hacia la terminal: " + terminalSalida + ANSI_RESET);
         this.aeropuerto.tomarTren(terminalSalida);
         this.aeropuerto.bajarTren(terminalSalida);
+        
+        //Si se tiene al menos dos horas se puede ir a comprar
+        if (this.vuelo.getHora() - this.aeropuerto.getHora() >= 2) {
+          
+                    System.out.println(ANSI_GREEN + " [PASAJERO]: " + Thread.currentThread().getName() + " va a comprar al freeshop " + terminalSalida + ANSI_RESET);
 
+            
+        } 
+        
+        
     }
 
     public void simularAtencion(int ms) {

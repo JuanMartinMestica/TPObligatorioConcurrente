@@ -140,6 +140,10 @@ public class Aeropuerto {
         }
     }
 
+    public synchronized int getHora() {
+        return this.horaActual;
+    }
+
     //Se abre la atención al público
     public void iniciarDia() {
         System.out.println(" ============== [ ⌚ ⌚ ⌚ AEROPUERTO ABRE] -- 06:00HS ==============");
