@@ -54,6 +54,9 @@ public class ControlVuelos {
         //Se selecciona un vuelo aleatorio entre la hora minima y máxima
         int posVuelo = r.nextInt(horaMax - horaMin) + horaMin;
         Vuelo vueloPasajero = vuelos.get(posVuelo);
+        
+        //Se marca un pasaje vendido
+        vueloPasajero.pasajeVendido();
 
         return vueloPasajero;
     }

@@ -41,7 +41,9 @@ public class Aeropuerto {
         //Se crean las tres terminales
         terminales.put('A', new Terminal('A', capacidadFreeshop, cantCajasFreeshop));
         terminales.put('B', new Terminal('B', capacidadFreeshop, cantCajasFreeshop));
-        terminales.put('c', new Terminal('C', capacidadFreeshop, cantCajasFreeshop));
+        terminales.put('C', new Terminal('C', capacidadFreeshop, cantCajasFreeshop));
+
+        this.crearCajeros(cantCajasFreeshop);
 
         //Se crea un semáforo con la cantidad de puestos de informe
         this.puestosDeInforme = new Semaphore(cantPuestosInforme);
@@ -53,6 +55,27 @@ public class Aeropuerto {
             this.atencionAeropuerto = new Semaphore(1);
         } else {
             this.atencionAeropuerto = new Semaphore(0);
+        }
+
+    }
+
+    public void crearCajeros(int cantCajas) {
+
+        char[] letras = {'A', 'B', 'C'};
+
+        for (int i = 0; i <= 2; i++) {
+
+            for (int j = 1; j <= cantCajas; j++) {
+
+                Terminal terminal = this.terminales.get(letras[i]);
+                FreeShop freeshopCajero = terminal.getFreeshop();
+
+                Cajero nuevoCajero = new Cajero(freeshopCajero);
+                Thread caj = new Thread(nuevoCajero, "[CAJERO TERMINAL: " + letras[i] + " CAJA: " + j + " ]");
+                caj.start();
+
+            }
+
         }
 
     }
@@ -191,6 +214,12 @@ public class Aeropuerto {
         } catch (InterruptedException ex) {
             Logger.getLogger(Aeropuerto.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
+
+    public Terminal getTerminal(char terminalSalida) {
+
+        return this.terminales.get(terminalSalida);
 
     }
 

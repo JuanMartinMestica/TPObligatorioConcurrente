@@ -13,8 +13,8 @@ public class Pasajero implements Runnable {
     private Aeropuerto aeropuerto;
     private char terminalSalida;
     private Vuelo vuelo;
-    private double probCompra = 0.4;
     private Random r = new Random();
+    private Terminal terminalEmbarque;
 
     public Pasajero(Aeropuerto ap) {
         this.aeropuerto = ap;
@@ -22,6 +22,8 @@ public class Pasajero implements Runnable {
 
     @Override
     public void run() {
+
+        int deseaComprar = r.nextInt(3);
 
         //Ingreso al aeropuerto
         System.out.println(ANSI_GREEN + "[PASAJERO]: " + Thread.currentThread().getName() + " acaba de llegar al aeropuerto" + ANSI_RESET);
@@ -46,16 +48,21 @@ public class Pasajero implements Runnable {
         System.out.println(ANSI_GREEN + " [PASAJERO]: " + Thread.currentThread().getName() + " se tomará el tren hacia la terminal: " + terminalSalida + ANSI_RESET);
         this.aeropuerto.tomarTren(terminalSalida);
         this.aeropuerto.bajarTren(terminalSalida);
-        
-        //Si se tiene al menos dos horas se puede ir a comprar
-        if (this.vuelo.getHora() - this.aeropuerto.getHora() >= 2) {
-          
-                    System.out.println(ANSI_GREEN + " [PASAJERO]: " + Thread.currentThread().getName() + " va a comprar al freeshop " + terminalSalida + ANSI_RESET);
 
-            
-        } 
-        
-        
+        //Si se tiene al menos dos horas y sale según la probabilidad entonces entra a comprar
+        if (this.vuelo.getHora() - this.aeropuerto.getHora() >= 2 && deseaComprar == 1) {
+
+            System.out.println(ANSI_GREEN + "[PASAJERO]: " + Thread.currentThread().getName() + " va a comprar al freeshop " + terminalSalida + ANSI_RESET);
+
+            //El cliente ingresa al freeshop
+            this.terminalEmbarque = this.aeropuerto.getTerminal(terminalSalida);
+
+            //Interacciones de compra
+            this.terminalEmbarque.comprar();
+            this.terminalEmbarque.salir();
+
+        }
+
     }
 
     public void simularAtencion(int ms) {

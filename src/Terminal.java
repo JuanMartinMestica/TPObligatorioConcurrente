@@ -33,11 +33,23 @@ class Terminal {
             PuestoEmbarque nuevoPuesto = new PuestoEmbarque();
             puestosEmbarque.put(i, nuevoPuesto);
 
-        //Se crea el freeshop con la capacidad y cajas
-         this.freeshop = new FreeShop(capacidadFreeshop, cantCajasFreeShop);
+            //Se crea el freeshop con la capacidad y cajas
+            this.freeshop = new FreeShop(capacidadFreeshop, cantCajasFreeShop);
 
         }
 
+    }
+
+    public FreeShop getFreeshop() {
+        return this.freeshop;
+    }
+
+    public void comprar() {
+        this.freeshop.ingresoPasajero();
+    }
+
+    public void salir() {
+        this.freeshop.salir();
     }
 
 }
