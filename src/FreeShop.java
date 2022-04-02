@@ -53,7 +53,11 @@ class FreeShop {
         try {
             this.salida.acquire();
 
-            System.out.println(ANSI_PURPLE + "[PASAJERO]: " + Thread.currentThread().getName() + " saliendo del freeshop" + ANSI_RESET);
+            System.out.println(ANSI_PURPLE + "[PASAJERO]: " + Thread.currentThread().getName() + " sale del freeshop" + ANSI_RESET);
+
+            this.cajas.release();
+            this.entrada.release();
+
         } catch (InterruptedException ex) {
             Logger.getLogger(FreeShop.class.getName()).log(Level.SEVERE, null, ex);
         }

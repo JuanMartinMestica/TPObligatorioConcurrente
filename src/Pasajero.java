@@ -30,7 +30,7 @@ public class Pasajero implements Runnable {
         this.aeropuerto.ingresoAeropuerto();
 
         //El pasajero llega y va al puesto de informe para ser atendido
-        this.aeropuerto.irPuestoInforme(this);
+        this.aeropuerto.irPuestoInforme();
         this.simularAtencion(1200);
         this.vuelo = this.aeropuerto.salirPuestoInforme();
 

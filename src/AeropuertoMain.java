@@ -4,13 +4,13 @@ public class AeropuertoMain {
     public static void main(String[] args) {
 
         //Variables con capacidades/cantidades
-        int cantPasajerosIniciales = 7;
+        int cantPasajerosIniciales = 20;
         
-        int capacidadTren = 5;
+        int capacidadTren = 10;
         int cantAerolineas = 9; // Hasta ahora hay 10 nombres de aerolineas
         int capacidadFreeshop = 4;
         int cantCajasFreeshop = 2;
-        int cantPuestosInformacion = 2;
+        int cantPuestosInformacion = 5;
         int cantPuestosAtencion = 1;
         
         //Variable que permite modificar cada cuandos segundos se simulará una hora

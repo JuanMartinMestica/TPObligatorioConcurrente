@@ -88,7 +88,7 @@ public class Aeropuerto {
             this.atencionAeropuerto.acquire();
 
             //El pasajero llega y trata de acceder al puesto de informe
-            System.out.println("[PUESTO DE INFORME]: " + Thread.currentThread().getName() + " pudo ingresar al aeropuerto y se formó en la fila del puesto");
+            System.out.println("[PUESTO DE INFORME]: " + Thread.currentThread().getName() + " se formó en la fila del puesto");
 
             this.atencionAeropuerto.release();
 
@@ -99,7 +99,7 @@ public class Aeropuerto {
     }
 
     //2- El pasajero llega al aeropuerto y se dirige al puesto de informe
-    public void irPuestoInforme(Pasajero pasajero) {
+    public void irPuestoInforme() {
 
         try {
 
