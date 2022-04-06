@@ -49,19 +49,22 @@ public class Pasajero implements Runnable {
         this.aeropuerto.tomarTren(terminalSalida);
         this.aeropuerto.bajarTren(terminalSalida);
 
+        //Una vez que llega a la terminal se le asigna
+        this.terminalEmbarque = this.aeropuerto.getTerminal(terminalSalida);
+
         //Si se tiene al menos dos horas y sale según la probabilidad entonces entra a comprar
         if (this.vuelo.getHora() - this.aeropuerto.getHora() >= 2 && deseaComprar == 1) {
 
             System.out.println(ANSI_GREEN + "[PASAJERO]: " + Thread.currentThread().getName() + " va a comprar al freeshop " + terminalSalida + ANSI_RESET);
-
-            //El cliente ingresa al freeshop
-            this.terminalEmbarque = this.aeropuerto.getTerminal(terminalSalida);
 
             //Interacciones de compra
             this.terminalEmbarque.comprar();
             this.terminalEmbarque.salir();
 
         }
+
+        //Por último se dirige al puesto de embarque
+        this.terminalEmbarque.irPuestoEmbarque(vuelo.getPuerta());
 
     }
 
