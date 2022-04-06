@@ -130,7 +130,7 @@ public class Aeropuerto {
 
         //Se adelanta una hora
         this.horaActual = (this.horaActual + 1) % 24;
-        System.out.println(" ============== [RELOJ ⌚ ⌚ ⌚]: Hora actual " + this.horaActual + ":00 ==============");
+        System.out.println(" ========================================== [RELOJ ⌚ ⌚ ⌚]: Hora actual " + this.horaActual + ":00 ==========================================");
 
         //Se verifica en que hora actual se encuentra para iniciar las acciones que corresponda
         if (!(this.horaActual > 6 && this.horaActual < 23)) {

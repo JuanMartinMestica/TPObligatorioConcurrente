@@ -8,6 +8,7 @@ public class Pasajero implements Runnable {
     /*===================== Variables para print ================*/
     private static final String ANSI_GREEN = "\u001B[32m";
     private static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_CYAN = "\u001B[36m";
     /*===========================================================*/
 
     private Aeropuerto aeropuerto;
@@ -15,6 +16,7 @@ public class Pasajero implements Runnable {
     private Vuelo vuelo;
     private Random r = new Random();
     private Terminal terminalEmbarque;
+    private int turnoAtencion;
 
     public Pasajero(Aeropuerto ap) {
         this.aeropuerto = ap;
@@ -26,7 +28,7 @@ public class Pasajero implements Runnable {
         int deseaComprar = r.nextInt(3);
 
         //Ingreso al aeropuerto
-        System.out.println(ANSI_GREEN + "[PASAJERO]: " + Thread.currentThread().getName() + " acaba de llegar al aeropuerto" + ANSI_RESET);
+        System.out.println(ANSI_CYAN + "[PASAJERO]: " + Thread.currentThread().getName() + " acaba de llegar al aeropuerto" + ANSI_RESET);
         this.aeropuerto.ingresoAeropuerto();
 
         //El pasajero llega y va al puesto de informe para ser atendido
@@ -36,6 +38,9 @@ public class Pasajero implements Runnable {
 
         //Ya se tiene el vuelo, se dirige al puesto de atención que corresponda
         System.out.println(ANSI_GREEN + "[PASAJERO]: " + Thread.currentThread().getName() + " tiene el vuelo: " + this.vuelo + ANSI_RESET);
+    
+        //El pasajero obtiene un turno
+        this.vuelo.getAerolinea().obtenerTurno(this);
         this.vuelo.getAerolinea().irAPuestoDeAtencion();
         this.simularAtencion(2000);
         this.vuelo.getAerolinea().salirPuestoAtencion();
@@ -75,6 +80,10 @@ public class Pasajero implements Runnable {
             Logger.getLogger(Pasajero.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public void setTurno(int turno) {
+        this.turnoAtencion = turno;
     }
 
 }
