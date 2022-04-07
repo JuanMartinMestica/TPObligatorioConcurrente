@@ -6,18 +6,18 @@ public class AeropuertoMain {
         //Variables con capacidades/cantidades
         int cantPasajerosIniciales = 20;
 
-        int capacidadTren = 10;
-        int cantAerolineas = 9; // Hasta ahora hay 10 nombres de aerolineas
+        int capacidadTren = 8;
+        int cantAerolineas = 8; // Hasta ahora hay 10 nombres de aerolineas
         int capacidadFreeshop = 4;
         int cantCajasFreeshop = 2;
-        int cantPuestosInformacion = 5;
-        int cantPuestosAtencion = 1;
+        int cantPuestosInformacion = 4;
+        int capacidadPuestoAtencion = 5;
 
         //Variable que permite modificar cada cuandos segundos se simulará una hora
         int segundosPorHora = 5;
-        int horaInicio = 4;
+        int horaInicio = 5;
 
-        Aeropuerto aeropuerto = new Aeropuerto(cantAerolineas, cantPuestosInformacion, capacidadFreeshop, cantCajasFreeshop, capacidadTren, horaInicio, cantPuestosAtencion);
+        Aeropuerto aeropuerto = new Aeropuerto(cantAerolineas, cantPuestosInformacion, capacidadFreeshop, cantCajasFreeshop, capacidadTren, horaInicio, capacidadPuestoAtencion);
 
         //Inicia el reloj
         Timer reloj = new Timer(aeropuerto, segundosPorHora);
@@ -25,8 +25,8 @@ public class AeropuertoMain {
         r.start();
 
         //Cada hora se generará una cantidad de pasajeros entre el minimo y el máximo
-        int cantPasajerosMaxima = 5;
-        int cantPasajerosMinima = 1;
+        int cantPasajerosMaxima = 15;
+        int cantPasajerosMinima = 5;
 
         //Hilo que generará los pasajeros constantemente
         GeneradorPasajeros generador = new GeneradorPasajeros(segundosPorHora, cantPasajerosMaxima, cantPasajerosMinima, aeropuerto);

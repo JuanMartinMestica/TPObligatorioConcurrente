@@ -22,7 +22,11 @@ public class Aeropuerto {
         this.aerolineas = new Aerolinea[cantAerolineas];
 
         for (int i = 0; i < cantAerolineas; i++) {
-            aerolineas[i] = new Aerolinea(nombres[i], cantPuestosAtencion);
+            Aerolinea nuevaAerolinea = new Aerolinea(nombres[i], cantPuestosAtencion);
+            aerolineas[i] = nuevaAerolinea;
+            AtencionPuesto atencionPuesto = new AtencionPuesto(nuevaAerolinea);
+            Thread atencion = new Thread(atencionPuesto, "[Atencion Puesto]");
+            atencion.start();
         }
 
         //Generador de vuelos y asignador de vuelos a pasajeros
@@ -88,7 +92,7 @@ public class Aeropuerto {
             this.atencionAeropuerto.acquire();
 
             //El pasajero llega y trata de acceder al puesto de informe
-            System.out.println("[PUESTO DE INFORME]: " + Thread.currentThread().getName() + " esperando para ingresar al puesto");
+            System.out.println("[PUESTO DE INFORME]: " + Thread.currentThread().getName() + " esperando para ingresar al puesto de información");
 
             this.atencionAeropuerto.release();
 
@@ -169,14 +173,14 @@ public class Aeropuerto {
 
     //Se abre la atención al público
     public void iniciarDia() {
-        System.out.println(" ============== [ ⌚ ⌚ ⌚ AEROPUERTO ABRE] -- 06:00HS ==============");
+        System.out.println(" ========================================== [ ⌚ ⌚ ⌚ AEROPUERTO ABRE] -- 06:00HS ==========================================");
         this.atencionAeropuerto.release();
     }
 
     //Se cierra la atención al público
     public void terminarDia() {
         this.atencionAeropuerto.drainPermits();
-        System.out.println("============== [ ⌚ ⌚ ⌚ AEROPUERTO CIERRA] -- 23.00HS ==============");
+        System.out.println("==========================================[ ⌚ ⌚ ⌚ AEROPUERTO CIERRA] -- 23.00HS ==========================================");
 
     }
 

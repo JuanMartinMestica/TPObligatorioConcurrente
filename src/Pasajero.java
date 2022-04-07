@@ -38,12 +38,14 @@ public class Pasajero implements Runnable {
 
         //Ya se tiene el vuelo, se dirige al puesto de atención que corresponda
         System.out.println(ANSI_GREEN + "[PASAJERO]: " + Thread.currentThread().getName() + " tiene el vuelo: " + this.vuelo + ANSI_RESET);
-    
+
         //El pasajero obtiene un turno
-        this.vuelo.getAerolinea().obtenerTurno(this);
-        this.vuelo.getAerolinea().irAPuestoDeAtencion();
-        this.simularAtencion(2000);
-        this.vuelo.getAerolinea().salirPuestoAtencion();
+        Aerolinea puestoAerolinea = this.vuelo.getAerolinea();
+
+        puestoAerolinea.ingresarPuesto();
+        puestoAerolinea.obtenerTurno(this);
+        puestoAerolinea.recibirAtencion(this.turnoAtencion);
+        puestoAerolinea.salirPuestoAtencion();
 
         /*Dependiendo de la puerta del embarque, se solicita al aeropuerto la terminal 
         correspondiente a la que debe ir el pasajero*/
