@@ -52,8 +52,6 @@ class Vuelo {
     public void subir() {
 
         try {
-            System.out.println(ANSI_RED + "[PASAJERO]: " + Thread.currentThread().getName() + " esperando para subir al avión" + ANSI_RESET);
-
             //Una vez se autoriza el despegue, se libera el semáforo para que suban los pasajeros
             this.subidaAvion.acquire();
 
@@ -73,9 +71,7 @@ class Vuelo {
         try {
             this.barreraDespegue.await();
 
-            System.out.println(ANSI_RED + "================================================================================" + ANSI_RESET);
             System.out.println(ANSI_RED + " [PASAJERO]: " + Thread.currentThread().getName() + " EN VUELO" + ANSI_RESET);
-            System.out.println(ANSI_RED + "================================================================================" + ANSI_RESET);
 
         } catch (InterruptedException ex) {
             Logger.getLogger(Vuelo.class.getName()).log(Level.SEVERE, null, ex);

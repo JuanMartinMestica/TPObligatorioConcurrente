@@ -14,6 +14,7 @@ public class Aeropuerto {
     private Aerolinea[] aerolineas;
     private String[] nombres = {"Aerolineas Argentinas", "Latam Airways", "Copa Airlines", "Fly Emirates", "Alitalia", "Lufthansa", "FlyBondi", "JetSmart", "AeroMexico", "American Airlines"};
     private Tren tren;
+    private GeneradorPasajeros generador;
 
     //Constructor
     public Aeropuerto(int cantAerolineas, int cantPuestosInforme, int capacidadFreeshop, int cantCajasFreeshop, int capacidadTren, int horaInicio, int cantPuestosAtencion) {
@@ -55,7 +56,7 @@ public class Aeropuerto {
         this.horaActual = horaInicio;
 
         //Semáforo para permitir la atención o no en el aeropueto
-        if (horaInicio > 6 && horaInicio < 23) {
+        if (horaInicio >= 6 && horaInicio <= 21) {
             this.atencionAeropuerto = new Semaphore(1);
         } else {
             this.atencionAeropuerto = new Semaphore(0);
@@ -184,7 +185,7 @@ public class Aeropuerto {
     //Se cierra la atención al público
     public void terminarDia() {
         this.atencionAeropuerto.drainPermits();
-        System.out.println("==========================================[ ⌚ ⌚ ⌚ AEROPUERTO CIERRA] -- 23.00HS ==========================================");
+        System.out.println("==========================================[ ⌚ ⌚ ⌚ AEROPUERTO CIERRA ATENCIÓN] -- 21.00HS ==========================================");
 
     }
 

@@ -47,14 +47,24 @@ public class ControlVuelos {
 
     public Vuelo obtenerVuelo(int horaPasajero) {
 
+        int posVuelo;
+
         //Hora máxima del vuelo
         int horaMax = 22;
 
         //Como minimo se le asigna un vuelo con 3 horas de diferencia con la hora actual
-        int horaMin = horaPasajero + 3;
+        int horaMin = (horaPasajero + 3);
 
-        //Se selecciona un vuelo aleatorio entre la hora minima y máxima
-        int posVuelo = r.nextInt(horaMax - horaMin) + horaMin;
+        if (horaMin == horaMax || horaMin > horaMax) {
+
+            posVuelo = horaMax;
+
+        } else {
+            //Se selecciona un vuelo aleatorio entre la hora minima y máxima
+            posVuelo = r.nextInt(horaMax - horaMin) + horaMin;
+
+        }
+
         Vuelo vueloAsignado = vuelos.get(posVuelo);
 
         //Se marca un pasaje vendido

@@ -37,8 +37,6 @@ class PuestoEmbarque {
 
     public void terminarEmbarque() {
 
-        System.out.println(ANSI_RED + "[PASAJERO]: " + Thread.currentThread().getName() + " embarcando en la terminal: " + this.numero + ANSI_RESET);
-      
         this.ingreso.release();
 
     }

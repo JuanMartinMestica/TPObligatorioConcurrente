@@ -7,16 +7,15 @@ public class GeneradorPasajeros implements Runnable {
 
     private int segundosPorHora;
     private Random r;
-    private int maximo;
-    private int minimo;
+    private int cantidadPasajeros;
+
     private Aeropuerto ap;
     private int pasajeroActual;
 
-    public GeneradorPasajeros(int segundosPorHora, int maximo, int minimo, Aeropuerto ap) {
+    public GeneradorPasajeros(int segundosPorHora, int cant, Aeropuerto ap) {
         this.segundosPorHora = segundosPorHora;
         this.r = new Random();
-        this.maximo = maximo;
-        this.minimo = minimo;
+        this.cantidadPasajeros = cant;
         this.ap = ap;
         this.pasajeroActual = 1;
     }
@@ -25,9 +24,15 @@ public class GeneradorPasajeros implements Runnable {
     public void run() {
 
         while (true) {
-            //Random entre minimo y máximo
-            int cantPasajeros = r.nextInt(maximo - minimo) + minimo;
-            this.crearPasajeros(cantPasajeros);
+
+            //Si los pasajeros podrán obtener un vuelo, se los genera
+            if (this.ap.getHora() >= 5 && this.ap.getHora() <= 19) {
+                //Se crean los hilos
+                this.crearPasajeros(this.cantidadPasajeros);
+
+            }
+
+            //Espera una hora
             this.esperar(segundosPorHora);
 
         }
