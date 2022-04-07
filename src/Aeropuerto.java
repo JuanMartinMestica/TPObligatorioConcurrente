@@ -137,7 +137,11 @@ public class Aeropuerto {
         System.out.println(" ========================================== [RELOJ ⌚ ⌚ ⌚]: Hora actual " + this.horaActual + ":00 ==========================================");
 
         //Se verifica en que hora actual se encuentra para iniciar las acciones que corresponda
-        if (!(this.horaActual > 6 && this.horaActual < 23)) {
+        if ((this.horaActual > 8 && this.horaActual <= 22)) {
+            
+            this.control.autorizarDespegue(horaActual);
+            
+        } else {
 
             //Se verifica si es hora de abrir
             if (this.horaActual == 6) {

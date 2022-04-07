@@ -14,7 +14,6 @@ class PuestoEmbarque {
     public PuestoEmbarque(int numero) {
         //Se deja ingresar el inicio (se atiende de a un pasajero)
         this.ingreso = new Semaphore(1);
-        this.pasajerosPresentes = 0;
         this.numero = numero;
     }
 
@@ -24,10 +23,8 @@ class PuestoEmbarque {
             ingreso.acquire();
 
             //Se hace el ingreso y se cuenta la cantidad de pasajeros 
-            System.out.println(ANSI_RED + "[PASAJERO]: " + Thread.currentThread().getName() + " listo para embarcar en la terminal: " + this.numero + ANSI_RESET);
-            this.pasajerosPresentes++;
+            System.out.println(ANSI_RED + "[PASAJERO]: " + Thread.currentThread().getName() + " embarcando en la terminal: " + this.numero + ANSI_RESET);
 
-            ingreso.release();
         } catch (InterruptedException ex) {
             Logger.getLogger(PuestoEmbarque.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -38,12 +35,11 @@ class PuestoEmbarque {
         return "Puesto " + this.numero;
     }
 
-    public void embarcar() {
+    public void terminarEmbarque() {
 
-    }
-
-    //Método para aeropuerto que permite el embarque 
-    public void permitirEmbarque() {
+        System.out.println(ANSI_RED + "[PASAJERO]: " + Thread.currentThread().getName() + " embarcando en la terminal: " + this.numero + ANSI_RESET);
+      
+        this.ingreso.release();
 
     }
 

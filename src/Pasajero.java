@@ -72,6 +72,11 @@ public class Pasajero implements Runnable {
 
         //Por último se dirige al puesto de embarque
         this.terminalEmbarque.irPuestoEmbarque(vuelo.getPuerta());
+        this.simularAtencion(1200);
+        this.terminalEmbarque.terminarEmbarque(vuelo.getPuerta());
+
+        this.vuelo.subir();
+        this.vuelo.esperarDespegue();
 
     }
 

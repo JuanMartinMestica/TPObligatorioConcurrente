@@ -54,6 +54,13 @@ class Terminal {
 
     }
 
+    public void terminarEmbarque(int puerta) {
+        PuestoEmbarque puesto = this.puestosEmbarque.get(puerta);
+
+        puesto.terminarEmbarque();
+
+    }
+
     public FreeShop getFreeshop() {
         return this.freeshop;
     }
