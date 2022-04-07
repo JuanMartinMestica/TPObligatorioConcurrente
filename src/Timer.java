@@ -4,7 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Timer implements Runnable {
-    
+
     private Aeropuerto aeropuerto;
     private int segActualizacion;
 
@@ -19,12 +19,12 @@ public class Timer implements Runnable {
 
         //Corre constantemente 
         while (true) {
-            this.aeropuerto.pasarTiempo();
             try {
                 Thread.sleep(this.segActualizacion * 1000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Timer.class.getName()).log(Level.SEVERE, null, ex);
             }
+            this.aeropuerto.pasarTiempo();
 
         }
 
