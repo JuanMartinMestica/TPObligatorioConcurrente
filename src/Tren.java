@@ -196,7 +196,7 @@ class Tren {
 
         lockTren.lock();
 
-        System.out.println(ANSI_BLUE + "[TREN]: llegó al hall central, ya se pueden subir los pasajeros" + ANSI_RESET);
+        System.out.println(ANSI_BLUE + "[TREN]: llegó a la estación principal, ya se pueden subir los pasajeros" + ANSI_RESET);
 
         this.viajeEnCurso = false;
         this.esperaTren.signalAll();

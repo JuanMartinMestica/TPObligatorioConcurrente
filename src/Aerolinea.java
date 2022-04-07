@@ -49,7 +49,7 @@ class Aerolinea {
         lockTurno.lock();
 
         pasajero.setTurno(this.turnoPasajero);
-        System.out.println("[PASAJERO]: " + Thread.currentThread().getName() + " se le asignó el turno " + this.turnoPasajero + " en la aerolínea " + this.nombre);
+        System.out.println("[PASAJERO]: " + Thread.currentThread().getName() + " ingresó al puesto de atención, se le asignó el turno " + this.turnoPasajero + " en la aerolínea " + this.nombre);
         this.turnoPasajero++;
 
         lockTurno.unlock();

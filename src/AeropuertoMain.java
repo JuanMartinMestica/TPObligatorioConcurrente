@@ -25,8 +25,8 @@ public class AeropuertoMain {
         r.start();
 
         //Cada hora se generará una cantidad de pasajeros entre el minimo y el máximo
-        int cantPasajerosMaxima = 15;
-        int cantPasajerosMinima = 5;
+        int cantPasajerosMaxima = 10;
+        int cantPasajerosMinima = 6;
 
         //Hilo que generará los pasajeros constantemente
         GeneradorPasajeros generador = new GeneradorPasajeros(segundosPorHora, cantPasajerosMaxima, cantPasajerosMinima, aeropuerto);
