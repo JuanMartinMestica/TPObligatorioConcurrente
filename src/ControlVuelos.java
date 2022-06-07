@@ -2,6 +2,7 @@
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ControlVuelos {
 
@@ -10,7 +11,7 @@ public class ControlVuelos {
     private int cantAerolineas;
     private Aerolinea[] aerolineas;
     private Random r = new Random();
-    Map<Integer, Vuelo> vuelos = new HashMap<>();
+    Map<Integer, Vuelo> vuelos = new ConcurrentHashMap<>();
     private static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_RESET = "\u001B[0m";
 

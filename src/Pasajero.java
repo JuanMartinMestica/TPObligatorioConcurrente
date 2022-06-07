@@ -17,15 +17,15 @@ public class Pasajero implements Runnable {
     private Random r = new Random();
     private Terminal terminalEmbarque;
     private int turnoAtencion;
+    int deseaComprar;
 
     public Pasajero(Aeropuerto ap) {
         this.aeropuerto = ap;
+        this.deseaComprar = r.nextInt(3);
     }
 
     @Override
     public void run() {
-
-        int deseaComprar = r.nextInt(3);
 
         //Ingreso al aeropuerto
         System.out.println(ANSI_CYAN + "[PASAJERO]: " + Thread.currentThread().getName() + " acaba de llegar al aeropuerto" + ANSI_RESET);

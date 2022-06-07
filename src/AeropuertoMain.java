@@ -7,8 +7,8 @@ public class AeropuertoMain {
         int cantAerolineas = 3; // Hasta ahora hay 10 nombres de aerolineas
         int capacidadFreeshop = 4;
         int cantCajasFreeshop = 2;
-        int cantPuestosInformacion = 7;
-        int capacidadPuestoAtencion = 5;
+        int cantPuestosInformacion = 5;
+        int capacidadPuestoAtencion = 2;
 
         //Variable que permite modificar cada cuandos segundos se simulará una hora
         int segundosPorHora = 7;
@@ -21,7 +21,7 @@ public class AeropuertoMain {
         Thread r = new Thread(reloj, "RELOJ");
         r.start();
 
-        //Cada hora se generará una cantidad de pasajeros entre el minimo y el máximo
+        //Cada hora se generará una cantidad de pasajeros 
         int cantPasajeros = 5;
 
         //Hilo que generará los pasajeros constantemente
