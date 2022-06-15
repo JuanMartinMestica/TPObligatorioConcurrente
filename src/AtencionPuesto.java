@@ -5,9 +5,11 @@ import java.util.logging.Logger;
 public class AtencionPuesto implements Runnable {
 
     private Aerolinea aerolinea;
+    private Aeropuerto aeropuerto;
 
-    public AtencionPuesto(Aerolinea aerolinea) {
+    public AtencionPuesto(Aerolinea aerolinea, Aeropuerto aeropuerto) {
         this.aerolinea = aerolinea;
+        this.aeropuerto = aeropuerto;
     }
 
     @Override
@@ -20,6 +22,7 @@ public class AtencionPuesto implements Runnable {
             aerolinea.atenderTurno();
             this.simularAtencion(600);
             aerolinea.terminarAtencion();
+            aeropuerto.llamarPasajero();
         }
 
     }

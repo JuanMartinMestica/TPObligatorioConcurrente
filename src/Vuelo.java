@@ -1,5 +1,6 @@
 
 import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
@@ -14,7 +15,7 @@ class Vuelo {
     private int puestoEmbarque;
     private int pasajesVendidos = 0;
     private Semaphore subidaAvion;
-    private CyclicBarrier barreraDespegue;
+    private CountDownLatch despegue;
 
     public Vuelo(Aerolinea aerolinea, int hora, int puestoEmbarque) {
         this.aerolinea = aerolinea;
@@ -68,22 +69,15 @@ class Vuelo {
 
     public void esperarDespegue() {
 
-        try {
-            this.barreraDespegue.await();
-
-            System.out.println(ANSI_RED + " [PASAJERO]: " + Thread.currentThread().getName() + " EN VUELO" + ANSI_RESET);
-
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Vuelo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (BrokenBarrierException ex) {
-            Logger.getLogger(Vuelo.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.despegue.countDown();
+        System.out.println(ANSI_RED + " [PASAJERO]: " + Thread.currentThread().getName() + " EN VUELO" + ANSI_RESET); 
 
     }
 
     public void autorizarSubida() {
 
-        this.barreraDespegue = new CyclicBarrier(this.pasajesVendidos);
+        //Reemplazar barrera ciclica
+        this.despegue = new CountDownLatch(this.pasajesVendidos);
 
         this.subidaAvion.release();
 

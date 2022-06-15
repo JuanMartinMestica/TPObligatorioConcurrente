@@ -126,9 +126,7 @@ class Tren {
             lockTren.lock();
 
             //Si quedan lugares espera para arrancar
-            while (this.espaciosRestantes > 0) {
-                this.esperaInicio.await();
-            }
+            this.esperaInicio.await(10, TimeUnit.SECONDS);
 
             //Si se llenó arranca el tren
             System.out.println(ANSI_BLUE + "==================== TREN INICIA VIAJE ====================" + ANSI_RESET);

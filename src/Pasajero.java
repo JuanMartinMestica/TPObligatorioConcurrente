@@ -16,8 +16,9 @@ public class Pasajero implements Runnable {
     private Vuelo vuelo;
     private Random r = new Random();
     private Terminal terminalEmbarque;
-    private int turnoAtencion;
+    public int turnoAtencion;
     int deseaComprar;
+    private boolean pasoPasajero = false;
 
     public Pasajero(Aeropuerto ap) {
         this.aeropuerto = ap;
@@ -42,10 +43,7 @@ public class Pasajero implements Runnable {
         //El pasajero obtiene un turno
         Aerolinea puestoAerolinea = this.vuelo.getAerolinea();
 
-        puestoAerolinea.ingresarPuesto();
-        puestoAerolinea.obtenerTurno(this);
-        puestoAerolinea.recibirAtencion(this.turnoAtencion);
-        puestoAerolinea.salirPuestoAtencion();
+        aeropuerto.dirigirsePuesto(this, puestoAerolinea, pasoPasajero);
 
         /*Dependiendo de la puerta del embarque, se solicita al aeropuerto la terminal 
         correspondiente a la que debe ir el pasajero*/

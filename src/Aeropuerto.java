@@ -2,6 +2,8 @@
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,6 +17,8 @@ public class Aeropuerto {
     private String[] nombres = {"Aerolineas Argentinas", "Latam Airways", "Copa Airlines", "Fly Emirates", "Alitalia", "Lufthansa", "FlyBondi", "JetSmart", "AeroMexico", "American Airlines"};
     private Tren tren;
     private GeneradorPasajeros generador;
+    private ReentrantLock guardia;
+    private Condition esperaHall;
 
     //Constructor
     public Aeropuerto(int cantAerolineas, int cantPuestosInforme, int capacidadFreeshop, int cantCajasFreeshop, int capacidadTren, int horaInicio, int cantPuestosAtencion) {
@@ -25,7 +29,7 @@ public class Aeropuerto {
         for (int i = 0; i < cantAerolineas; i++) {
             Aerolinea nuevaAerolinea = new Aerolinea(nombres[i], cantPuestosAtencion);
             aerolineas[i] = nuevaAerolinea;
-            AtencionPuesto atencionPuesto = new AtencionPuesto(nuevaAerolinea);
+            AtencionPuesto atencionPuesto = new AtencionPuesto(nuevaAerolinea, this);
             Thread atencion = new Thread(atencionPuesto, "[Atencion Puesto]");
             atencion.start();
         }
@@ -61,6 +65,9 @@ public class Aeropuerto {
         } else {
             this.atencionAeropuerto = new Semaphore(0);
         }
+
+        guardia = new ReentrantLock();
+        esperaHall = guardia.newCondition();
 
     }
 
@@ -139,9 +146,9 @@ public class Aeropuerto {
 
         //Se verifica en que hora actual se encuentra para iniciar las acciones que corresponda
         if ((this.horaActual > 8 && this.horaActual <= 22)) {
-            
+
             this.control.autorizarDespegue(horaActual);
-            
+
         } else {
 
             //Se verifica si es hora de abrir
@@ -229,6 +236,50 @@ public class Aeropuerto {
     public Terminal getTerminal(char terminalSalida) {
 
         return this.terminales.get(terminalSalida);
+
+    }
+
+    //Hall central
+    public void dirigirsePuesto(Pasajero pasajero, Aerolinea puestoAerolinea, boolean pasoPasajero) {
+
+        System.out.println(Thread.currentThread().getName() + " en el hall central");
+
+        while (!pasoPasajero) {
+
+            if (puestoAerolinea.hayEspacio()) {
+
+                puestoAerolinea.ingresarPuesto();
+                puestoAerolinea.obtenerTurno(pasajero);
+                puestoAerolinea.recibirAtencion(pasajero.turnoAtencion);
+                puestoAerolinea.salirPuestoAtencion();
+                pasoPasajero = true;
+
+            } else {
+
+                guardia.lock();
+
+                try {
+                    esperaHall.await();
+                     System.out.println(Thread.currentThread().getName() + " despierto");
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Aeropuerto.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                guardia.unlock();
+
+            }
+
+        }
+
+    }
+
+    public void llamarPasajero() {
+
+        guardia.lock();
+
+        esperaHall.signalAll();
+
+        guardia.unlock();
 
     }
 

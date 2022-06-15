@@ -13,11 +13,12 @@ class Aerolinea {
     private static final String ANSI_GREEN = "\u001B[32m";
 
     private final String nombre;
-    private Semaphore puestoAtencion, ingresoPuesto, atencion, salida, atenderTurno;
+    private Semaphore puestoAtencion, ingresoPuesto, atencion, salida, atenderTurno, mutex;
     private Lock guardia, lockTurno, asignacion;
     private Condition esperaTurno;
     private int turnoPasajero;
     private int turnoAtencion;
+    private int cantEspacio;
 
     public Aerolinea(String nombre, int capacidad) {
 
@@ -28,6 +29,7 @@ class Aerolinea {
         this.atencion = new Semaphore(0);
         this.salida = new Semaphore(0);
         this.atenderTurno = new Semaphore(1);
+        this.mutex = new Semaphore(1);
 
         //Locks para variables compartidas y condiciones
         this.guardia = new ReentrantLock();
@@ -37,6 +39,9 @@ class Aerolinea {
         //Turno que se le asigna al pasajero y turno que se está atendiendo
         this.turnoPasajero = 1;
         this.turnoAtencion = 0;
+
+        //Espacio
+        this.cantEspacio = capacidad;
 
     }
 
@@ -58,10 +63,14 @@ class Aerolinea {
 
     public void ingresarPuesto() {
 
-        System.out.println("[PASAJERO]: " + Thread.currentThread().getName() + " está en el hall central, quiere ingresar al puesto de atención");
-
+        // System.out.println("[PASAJERO]: " + Thread.currentThread().getName() + " está en el hall central, quiere ingresar al puesto de atención");
         try {
             this.ingresoPuesto.acquire();
+
+            this.mutex.acquire();
+            this.cantEspacio--;
+            this.mutex.release();
+
         } catch (InterruptedException ex) {
             Logger.getLogger(Aerolinea.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -105,6 +114,16 @@ class Aerolinea {
         }
 
         System.out.println(ANSI_GREEN + "[PUESTO DE ATENCIÓN - " + this.nombre + "]: " + Thread.currentThread().getName() + " terminó su atención en el puesto" + ANSI_RESET);
+
+        try {
+            this.mutex.acquire();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Aerolinea.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.cantEspacio++;
+
+        this.mutex.release();
 
         //Se le indica al hilo de atención que ya terminó y puede atender otro pasajero
         this.atenderTurno.release();
@@ -150,6 +169,26 @@ class Aerolinea {
 
         //Se permite la salida al pasajero
         this.salida.release();
+
+    }
+
+    public boolean hayEspacio() {
+
+        boolean hayEspacio = false;
+
+        try {
+            this.mutex.acquire();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Aerolinea.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (this.cantEspacio > 0) {
+            hayEspacio = true;
+        }
+
+        this.mutex.release();
+
+        return hayEspacio;
 
     }
 

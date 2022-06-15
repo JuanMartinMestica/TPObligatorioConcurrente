@@ -12,7 +12,7 @@ public class AeropuertoMain {
 
         //Variable que permite modificar cada cuandos segundos se simulará una hora
         int segundosPorHora = 7;
-        int horaInicio = 5;
+        int horaInicio = 6;
 
         Aeropuerto aeropuerto = new Aeropuerto(cantAerolineas, cantPuestosInformacion, capacidadFreeshop, cantCajasFreeshop, capacidadTren, horaInicio, capacidadPuestoAtencion);
 
